@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.36.3](https://github.com/Effect-TS/core/compare/@effect-ts/system@0.36.2...@effect-ts/system@0.36.3) (2021-05-24)
+
+
+### Bug Fixes
+
+* **case:** add proper equality check ([db0f113](https://github.com/Effect-TS/core/commit/db0f113d30445be0e8df2635581034cd8d381813))
+* **stream:** fix types of forEach ([511c6ba](https://github.com/Effect-TS/core/commit/511c6ba13e0d1c3b98a6821ebaabb51783df2fc2))
+
+
+### Features
+
+* **stream:** pipeable combinators ([838e65e](https://github.com/Effect-TS/core/commit/838e65e32f1e2281b59a117cc90e8b2ad9dda519))
+* **stream:** use hashmap ([2e5f2c8](https://github.com/Effect-TS/core/commit/2e5f2c86e04fbea2a01f915153455ad84d667f3a))
+
+
+
+
+
 ## [0.36.2](https://github.com/Effect-TS/core/compare/@effect-ts/system@0.36.1...@effect-ts/system@0.36.2) (2021-05-18)
 
 
