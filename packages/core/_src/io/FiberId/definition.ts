@@ -9,7 +9,10 @@ export interface FiberId extends Equals {
 }
 
 export declare namespace FiberId {
-  type Runtime = RuntimeFiberId;
+  /**
+   * @tsplus type ets/FiberId/Runtime
+   */
+  export type Runtime = RuntimeFiberId;
 }
 
 /**

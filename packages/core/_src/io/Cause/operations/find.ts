@@ -9,7 +9,7 @@ export function find_<E, Z>(
   self: Cause<E>,
   f: (cause: Cause<E>) => Option<Z>
 ): Option<Z> {
-  return findSafe(self, f).run();
+  return findLoop(self, f, List.empty());
 }
 
 /**
@@ -19,25 +19,29 @@ export function find_<E, Z>(
  */
 export const find = Pipeable(find_);
 
-function findSafe<E, Z>(
+function findLoop<E, Z>(
   self: Cause<E>,
-  f: (cause: Cause<E>) => Option<Z>
-): Eval<Option<Z>> {
+  f: (cause: Cause<E>) => Option<Z>,
+  stack: List<Cause<E>>
+): Option<Z> {
   const result = f(self);
-  if (result._tag === "Some") {
-    return Eval.succeed(result);
+  if (result.isSome()) {
+    return result;
   }
   realCause(self);
   switch (self._tag) {
     case "Both":
-    case "Then":
-      return Eval.suspend(findSafe(self.left, f)).flatMap((leftResult) =>
-        leftResult._tag === "Some" ? Eval.succeedNow(leftResult) : findSafe(self.right, f)
-      ) as Eval<Option<Z>>;
-    case "Stackless": {
-      return Eval.suspend(findSafe(self.cause, f));
+    case "Then": {
+      return findLoop(self.left, f, stack.prepend(self.right));
     }
-    default:
-      return Eval.succeed(result);
+    case "Stackless": {
+      return findLoop(self.cause, f, stack);
+    }
+    default: {
+      if (stack.isNil()) {
+        return Option.none;
+      }
+      return findLoop(stack.head, f, stack.tail);
+    }
   }
 }

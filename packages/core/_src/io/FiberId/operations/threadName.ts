@@ -3,6 +3,7 @@
  * represented by the specified `FiberId`.
  *
  * @tsplus fluent ets/FiberId threadName
+ * @tsplus fluent ets/FiberId/Runtime threadName
  */
 export function threadName(self: FiberId): string {
   const identifiers = Chunk.from(self.ids)

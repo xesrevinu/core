@@ -1,3 +1,4 @@
+import type { FiberDump } from "@effect/core/io/Fiber/dump";
 import type { FiberStatus } from "@effect/core/io/Fiber/status";
 
 export const FiberSym = Symbol.for("@effect/core/io/Fiber");
@@ -29,10 +30,13 @@ export interface Fiber<E, A> {
 export type RealFiber<E, A> = Fiber.Runtime<E, A> | Fiber.Synthetic<E, A>;
 
 export declare namespace Fiber {
-  type Runtime<E, A> = RuntimeFiber<E, A>;
-  type Synthetic<E, A> = SyntheticFiber<E, A>;
+  export type Runtime<E, A> = RuntimeFiber<E, A>;
+  export type Synthetic<E, A> = SyntheticFiber<E, A>;
 
-  interface Descriptor {
+  export type Dump = FiberDump;
+  export type Status = FiberStatus;
+
+  export interface Descriptor {
     /**
      * The unique identifier of the `Fiber`.
      */

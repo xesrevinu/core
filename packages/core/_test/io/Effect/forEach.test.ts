@@ -302,10 +302,12 @@ describe.concurrent("Effect", () => {
 
       const result = await program.unsafeRunPromiseExit();
 
-      assert.isTrue(
-        result.isFailure() && result.cause.isDieType() && result.cause.value instanceof Error &&
-          result.cause.value.message === "1"
-      );
+      if (result.isFailure()) {
+        const squashedCause = result.cause.squash();
+        assert.isTrue(squashedCause instanceof Error && squashedCause.message === "1");
+      } else {
+        assert.fail();
+      }
     });
 
     it("returns results in the same order", async () => {

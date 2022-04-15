@@ -1,4 +1,3 @@
-import type { RealCause } from "@effect/core/io/Cause/definition";
 import { realCause } from "@effect/core/io/Cause/definition";
 
 /**
@@ -11,48 +10,7 @@ export function foldLeft_<E, Z>(
   initial: Z,
   f: (z: Z, cause: Cause<E>) => Option<Z>
 ): Z {
-  let acc: Z = initial;
-  realCause(self);
-  let current: RealCause<E> | undefined = self;
-  let causes: Stack<Cause<E>> | undefined = undefined;
-
-  while (current) {
-    const result = f(acc, current);
-
-    acc = result._tag === "Some" ? result.value : acc;
-    realCause(current);
-    switch (current._tag) {
-      case "Then": {
-        causes = new Stack(current.right, causes);
-        realCause(current.left);
-        current = current.left;
-        break;
-      }
-      case "Both": {
-        causes = new Stack(current.right, causes);
-        realCause(current.left);
-        current = current.left;
-        break;
-      }
-      case "Stackless": {
-        realCause(current.cause);
-        current = current.cause;
-        break;
-      }
-      default: {
-        current = undefined;
-        break;
-      }
-    }
-
-    if (!current && causes) {
-      realCause(causes.value);
-      current = causes.value;
-      causes = causes.previous;
-    }
-  }
-
-  return acc;
+  return foldLeftLoop(initial, f, self, List.empty());
 }
 
 /**
@@ -61,3 +19,31 @@ export function foldLeft_<E, Z>(
  * @tsplus static ets/Cause/Aspects foldLeft
  */
 export const foldLeft = Pipeable(foldLeft_);
+
+/**
+ * @tsplus tailRec
+ */
+function foldLeftLoop<Z, E>(
+  z: Z,
+  f: (z: Z, cause: Cause<E>) => Option<Z>,
+  cause: Cause<E>,
+  stack: List<Cause<E>>
+): Z {
+  const result = f(z, cause).getOrElse(z);
+  realCause(cause);
+  switch (cause._tag) {
+    case "Both":
+    case "Then": {
+      return foldLeftLoop(result, f, cause.left, stack.prepend(cause.right));
+    }
+    case "Stackless": {
+      return foldLeftLoop(result, f, cause.cause, stack);
+    }
+    default: {
+      if (stack.isNil()) {
+        return result;
+      }
+      return foldLeftLoop(result, f, stack.head, stack.tail);
+    }
+  }
+}
