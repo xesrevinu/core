@@ -10,6 +10,7 @@ export interface RuntimeConfig {
     readonly reportFatal: (defect: unknown) => void
     readonly supervisor: Supervisor<unknown>
     readonly loggers: HashSet<Logger<string, unknown>>
+    readonly tracer: Tracer
     readonly flags: RuntimeConfigFlags
     readonly maxOp: number
   }

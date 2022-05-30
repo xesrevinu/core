@@ -1,5 +1,6 @@
 import type { Effect } from "@effect/core/io/Effect/definition/base"
 import { Base } from "@effect/core/io/Effect/definition/base"
+import type { SpanAttribute } from "@effect/core/io/Tracer/definition"
 
 export type Instruction =
   | IFlatMap<any, any, any, any, any, any>
@@ -24,6 +25,7 @@ export type Instruction =
   | IGetForkScope<any, any, any>
   | IOverrideForkScope<any, any, any>
   | ILogged<any>
+  | ITraced<any, any, any>
   | IFiberRefModifyAll<any>
   | IFiberRefLocally<any, any, any, any, any>
   | IFiberRefDelete
@@ -424,6 +426,23 @@ export class ILogged<A> extends Base<unknown, never, void> {
     readonly overrideLogLevel: Option<LogLevel> = Option.none,
     readonly overrideRef1: FiberRef<unknown, unknown> | null = null,
     readonly overrideValue1: unknown = null,
+    readonly trace?: string
+  ) {
+    super()
+  }
+
+  unsafeLog() {
+    return `${this._tag} at ${this.trace}`
+  }
+}
+
+export class ITraced<R, E, A> extends Base<R, E, A> {
+  readonly _tag = "Traced"
+
+  constructor(
+    readonly effect: Effect<R, E, A>,
+    readonly name: string,
+    readonly attributes: Array<SpanAttribute> = [],
     readonly trace?: string
   ) {
     super()

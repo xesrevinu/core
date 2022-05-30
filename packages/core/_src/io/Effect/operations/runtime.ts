@@ -1,3 +1,5 @@
+import { EffectTracer } from "@effect/core/io/Tracer/definition"
+
 /**
  * Returns an effect that accesses the runtime, which can be used to
  * (unsafely) execute tasks. This is useful for integration with legacy code
@@ -26,6 +28,7 @@ export const defaultRuntimeConfig: RuntimeConfig = RuntimeConfig({
       .map((output) => console.log(output))
       .filterLogLevel((level) => level >= LogLevel.Info)
   ),
+  tracer: new EffectTracer(),
   flags: RuntimeConfigFlags.empty + RuntimeConfigFlag.EnableFiberRoots,
   maxOp: 2048
 })

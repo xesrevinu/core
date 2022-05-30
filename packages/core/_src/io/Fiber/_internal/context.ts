@@ -7,6 +7,7 @@ import { _A, _E, FiberSym } from "@effect/core/io/Fiber/definition"
 import { FiberStatus } from "@effect/core/io/Fiber/status"
 import { concreteFiberRefs } from "@effect/core/io/FiberRefs/operations/_internal/FiberRefsInternal"
 import { joinFiberRefs } from "@effect/core/io/FiberRefs/operations/_internal/join"
+import type { Span } from "@effect/core/io/Tracer/definition"
 import { defaultScheduler } from "@effect/core/support/Scheduler"
 import * as StackTraceBuilder from "@effect/core/support/StackTraceBuilder"
 import { constVoid } from "@tsplus/stdlib/data/Function"
@@ -86,16 +87,28 @@ export class FiberContext<E, A> implements Fiber.Runtime<E, A> {
 
   fiberRefLocals: FiberRefLocals
 
+  fiberSpan: Span
+
   constructor(
     readonly _id: FiberId.Runtime,
     readonly childFibers: Set<FiberContext<any, any>>,
     fiberRefLocals: FiberRefLocals,
     runtimeConfig: RuntimeConfig,
-    interruptStatus?: Stack<boolean>
+    interruptStatus?: Stack<boolean>,
+    parentSpan?: Span
   ) {
     this.fiberRefLocals = fiberRefLocals
     this.runtimeConfig = runtimeConfig
     this.interruptStatus = interruptStatus
+    this.fiberSpan = runtimeConfig.value.tracer.startSpan(
+      `effect-fiber-${_id.id}`,
+      _id.startTimeSeconds * 1000,
+      [],
+      parentSpan
+    )
+    this.unsafeOnDone((exit) => {
+      this.runtimeConfig.value.tracer.endSpan(this.fiberSpan, exit.flatten())
+    })
     if (this.trackMetrics) {
       fibersStarted.value.unsafeUpdate(1, HashSet.empty())
       fiberForkLocations.value.unsafeUpdate(this._location.stringify(), HashSet.empty())
@@ -1007,7 +1020,8 @@ export class FiberContext<E, A> implements Fiber.Runtime<E, A> {
       grandChildren,
       childFiberRefLocals,
       this.runtimeConfig,
-      new Stack(this.interruptStatus ? this.interruptStatus.value : true)
+      new Stack(this.interruptStatus ? this.interruptStatus.value : true),
+      this.fiberSpan
     )
 
     if (this.runtimeConfig.value.supervisor !== Supervisor.none) {
@@ -1458,6 +1472,29 @@ export class FiberContext<E, A> implements Fiber.Runtime<E, A> {
 
                     current = this.unsafeNextEffect(undefined)
 
+                    break
+                  }
+
+                  case "Traced": {
+                    const effect = current
+                    const parent = this.fiberSpan
+                    const span = this.runtimeConfig.value.tracer.startSpan(
+                      effect.name,
+                      void 0,
+                      effect.attributes,
+                      parent
+                    )
+                    current = instruction(Effect.acquireUseReleaseExit(
+                      Effect.succeed(() => {
+                        this.fiberSpan = span
+                      }),
+                      () => effect.effect,
+                      (_, exit) =>
+                        Effect.succeed(() => {
+                          this.runtimeConfig.value.tracer.endSpan(span, exit)
+                          this.fiberSpan = parent
+                        })
+                    ))
                     break
                   }
 

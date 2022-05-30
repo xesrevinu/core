@@ -227,6 +227,14 @@ import { Trace } from "@effect/core/io/Trace/definition"
 /**
  * @tsplus global
  */
+import { Span } from "@effect/core/io/Tracing/Span"
+/**
+ * @tsplus global
+ */
+import { Tracer } from "@effect/core/io/Tracer/definition"
+/**
+ * @tsplus global
+ */
 import { TraceElement } from "@effect/core/io/TraceElement/definition"
 /**
  * @tsplus global

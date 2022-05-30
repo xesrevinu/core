@@ -17,9 +17,15 @@ export class Runtime<R> {
 
     const fiberRefLocals: ImmutableMap<FiberRef<unknown, unknown>, List.NonEmpty<Tuple<[FiberId.Runtime, unknown]>>> =
       ImmutableMap(
-        Tuple(FiberRef.currentEnvironment.value, List.cons(Tuple(fiberId, this.environment), List.nil())),
-        Tuple(DefaultEnv.services.value, List.cons(Tuple(fiberId, DefaultEnv.Services.live.value), List.nil()))
-      ) as any
+        Tuple(
+          FiberRef.currentEnvironment.value,
+          List.cons<Tuple<[FiberId.Runtime, unknown]>>(Tuple(fiberId, this.environment), List.nil())
+        ),
+        Tuple(
+          DefaultEnv.services.value,
+          List.cons<Tuple<[FiberId.Runtime, unknown]>>(Tuple(fiberId, DefaultEnv.Services.live.value), List.nil())
+        )
+      )
 
     const context: FiberContext<E, A> = new FiberContext(
       fiberId,

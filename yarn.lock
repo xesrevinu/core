@@ -815,16 +815,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@repo-tooling/eslint-plugin-dprint@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@repo-tooling/eslint-plugin-dprint@npm:0.0.3"
+"@repo-tooling/eslint-plugin-dprint@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@repo-tooling/eslint-plugin-dprint@npm:0.0.4"
   dependencies:
     "@dprint/formatter": ^0.2.0
     "@dprint/typescript": ^0.68.3
     "@typescript-eslint/utils": ^5.0.0
     diff: ^5.0.0
     eslint: ^8.0.0
-  checksum: 8ef304017850b2b1c764912ead5a11469fd53c876364d8b16ec76fff6e761f76f734d96208b8ca9b604df3bab098e8cf201e5114c02e0547cd2a49eab16c85dd
+  checksum: 7c11d0c4785d36426dbb31c1d01fba5e99ee391951251bd1c74e3f9e9c79191b7e08f2c1424b98d4442fed0b828497662aa99477ad0765f9d4fd57fbae17cf3b
   languageName: node
   linkType: hard
 
@@ -863,9 +863,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsplus/installer@npm:0.0.107":
-  version: 0.0.107
-  resolution: "@tsplus/installer@npm:0.0.107"
+"@tsplus/installer@npm:0.0.108":
+  version: 0.0.108
+  resolution: "@tsplus/installer@npm:0.0.108"
   dependencies:
     mkdirp: ^1.0.4
     rimraf: ^3.0.2
@@ -874,7 +874,7 @@ __metadata:
     zlib: ^1.0.5
   bin:
     tsplus-install: bin/tsplus-install
-  checksum: ec5aa1661d89b27beafb02f0d52092dba19de02122c4b47c8ca27fba41dbd0f8a1af509f588a9ae4c76ce37b74bcb0d424ccfc7abcaf407fab4ac7e00fd2c297
+  checksum: a05e904b3698aa02d3db0b1207d524e4c77b86d7413ad3cd38bf313cbfebc6d9313a2b53776e94bf222c011a32760ba44b6ccd471074e0818f71d42f05c78891
   languageName: node
   linkType: hard
 
@@ -985,7 +985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^17.0.35":
+"@types/node@npm:*":
   version: 17.0.35
   resolution: "@types/node@npm:17.0.35"
   checksum: 7a24946ae7fd20267ed92466384f594e448bfb151081158d565cc635d406ecb29ea8fb85fcd2a1f71efccf26fb5bd3c6f509bde56077eb8b832b847a6664bc62
@@ -996,6 +996,13 @@ __metadata:
   version: 12.20.47
   resolution: "@types/node@npm:12.20.47"
   checksum: 97487af02fada4342e1bd47f9c9ebf601c12b85cbf17056ba73a315339ae996490403f2d4d1d799d8078cfe43a59e33370b4a5ae2d4fb79dd02359f4691934b4
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^17.0.36":
+  version: 17.0.36
+  resolution: "@types/node@npm:17.0.36"
+  checksum: 11055fde0a1e1421113849b5e32c7022911efc0be670729947bf0162970e79962d804b1eb8a9afb291380cac97cf0e684511415d586ae5fe1560322c940fe188
   languageName: node
   linkType: hard
 
@@ -2566,11 +2573,11 @@ __metadata:
     "@changesets/cli": ^2.22.0
     "@effect-ts/build-utils": 0.40.2
     "@effect-ts/core": ^0.60.1
-    "@repo-tooling/eslint-plugin-dprint": ^0.0.3
-    "@tsplus/installer": 0.0.107
+    "@repo-tooling/eslint-plugin-dprint": ^0.0.4
+    "@tsplus/installer": 0.0.108
     "@tsplus/stdlib": 0.0.71
     "@tsplus/stdlib-global": ^0.0.36
-    "@types/node": ^17.0.35
+    "@types/node": ^17.0.36
     "@types/rimraf": ^3.0.2
     "@typescript-eslint/eslint-plugin": ^5.26.0
     "@typescript-eslint/parser": ^5.26.0
@@ -2591,7 +2598,7 @@ __metadata:
     typescript: ^4.7.2
     ultra-runner: ^3.10.5
     vite: ^2.9.9
-    vitest: 0.12.9
+    vitest: 0.13.0
   languageName: unknown
   linkType: soft
 
@@ -7513,7 +7520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^2.9.8, vite@npm:^2.9.9":
+"vite@npm:^2.9.9":
   version: 2.9.9
   resolution: "vite@npm:2.9.9"
   dependencies:
@@ -7542,9 +7549,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.12.9":
-  version: 0.12.9
-  resolution: "vitest@npm:0.12.9"
+"vitest@npm:0.13.0":
+  version: 0.13.0
+  resolution: "vitest@npm:0.13.0"
   dependencies:
     "@types/chai": ^4.3.1
     "@types/chai-subset": ^1.3.3
@@ -7553,7 +7560,7 @@ __metadata:
     local-pkg: ^0.4.1
     tinypool: ^0.1.3
     tinyspy: ^0.3.2
-    vite: ^2.9.8
+    vite: ^2.9.9
   peerDependencies:
     "@vitest/ui": "*"
     c8: "*"
@@ -7570,7 +7577,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: efc1c7279273ec594e8a1865c6bc38e758f87e500e2daf971f110b3f845d0d2552813e80b8d9634cca9a10fe626b5a9eb8f5533d9a97e50d7277c3e969cab433
+  checksum: 78c35565cf75e8b0f7689e15a7f4370819ac39394b966711bcafc51a5a3e816034a5fa9726e038edb809dd77cf95441c6f991d8b1dde4fbdcbfb14b05921a5f0
   languageName: node
   linkType: hard
 
