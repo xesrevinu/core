@@ -1,5 +1,17 @@
 # @effect/core
 
+## 0.0.5
+
+### Patch Changes
+
+- [#1231](https://github.com/Effect-TS/core/pull/1231) [`801ed8cf1`](https://github.com/Effect-TS/core/commit/801ed8cf11770d193a6dcd5d1c3d6ec7fefb6c72) Thanks [@wesselvdv](https://github.com/wesselvdv)! - Add TQueue implementation
+
+* [#1229](https://github.com/Effect-TS/core/pull/1229) [`950b69e61`](https://github.com/Effect-TS/core/commit/950b69e61df25ee0212be1df27615cf07e6bc6d1) Thanks [@IMax153](https://github.com/IMax153)! - fix Stream.peel and Stream.aggregateWithinEither
+
+- [#1229](https://github.com/Effect-TS/core/pull/1229) [`a9956827f`](https://github.com/Effect-TS/core/commit/a9956827f5ff382723c428e8988e50ddf0d67ade) Thanks [@IMax153](https://github.com/IMax153)! - fix issue with Stream.zipWith
+
+* [#1231](https://github.com/Effect-TS/core/pull/1231) [`dceb8c91b`](https://github.com/Effect-TS/core/commit/dceb8c91b81473c1211f6adb8a61b54d5b9fe8bf) Thanks [@wesselvdv](https://github.com/wesselvdv)! - remove parenthesis on length and size getters
+
 ## 0.0.4
 
 ### Patch Changes
